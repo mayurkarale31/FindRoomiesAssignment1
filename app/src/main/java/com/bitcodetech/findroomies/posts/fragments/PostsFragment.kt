@@ -8,6 +8,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bitcodetech.findroomies.R
+import com.bitcodetech.findroomies.addposts.fragments.AddPostFragment
 import com.bitcodetech.findroomies.databinding.PostsFragmentBinding
 import com.bitcodetech.findroomies.commons.factory.MyViewModelFactory
 import com.bitcodetech.findroomies.posts.adapter.PostsAdapter
@@ -20,12 +22,13 @@ class PostsFragment : Fragment() {
 
     private lateinit var postsViewModel : PostsViewModel
     private lateinit var postsAdapter : PostsAdapter
+    private var addPostsFragment = AddPostFragment()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = PostsFragmentBinding.inflate(layoutInflater)
 
         initViews()
@@ -49,7 +52,17 @@ class PostsFragment : Fragment() {
                     }
                 }
             })
+        binding.btnAddPosts.setOnClickListener {
+                addAddPostsFragment()
         }
+    }
+
+    private fun addAddPostsFragment(){
+        parentFragmentManager.beginTransaction()
+            .add(R.id.mainContainer, addPostsFragment, null)
+            .addToBackStack(null)
+            .commit()
+    }
 
     private fun initObservers() {
         postsViewModel.postsUpdateAvailableLiveData.observe(
