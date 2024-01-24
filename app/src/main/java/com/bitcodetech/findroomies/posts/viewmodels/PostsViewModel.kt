@@ -13,7 +13,7 @@ class PostsViewModel(
     private val postsRepository : PostsRepository
 ): ViewModel() {
 
-    val postsUpdateAvailableLiveData = MutableLiveData<Boolean>()
+    val postsMutableLiveData = MutableLiveData<Boolean>()
     val posts = ArrayList<Post>()
 
     fun fetchPosts(){
@@ -22,7 +22,7 @@ class PostsViewModel(
 
             withContext(Dispatchers.Main){
                 this@PostsViewModel.posts.addAll(posts)
-                postsUpdateAvailableLiveData.postValue(true)
+                postsMutableLiveData.postValue(true)
             }
         }
     }

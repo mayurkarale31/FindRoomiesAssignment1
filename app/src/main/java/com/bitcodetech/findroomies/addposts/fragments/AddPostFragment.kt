@@ -4,89 +4,112 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.bitcodetech.findroomies.R
+import com.bitcodetech.findroomies.addposts.models.AddPostModel
 import com.bitcodetech.findroomies.addposts.repository.AddPostRepository
 import com.bitcodetech.findroomies.addposts.viewmodels.AddPostViewModel
 import com.bitcodetech.findroomies.commons.factory.MyViewModelFactory
-import com.bitcodetech.findroomies.databinding.AddPostBinding
+import com.bitcodetech.findroomies.databinding.AddPostsFragmentBinding
 import com.bitcodetech.findroomies.posts.models.Post
 
 class AddPostFragment : Fragment() {
 
-    private lateinit var binding : AddPostBinding
+    private lateinit var binding : AddPostsFragmentBinding
 
-    private lateinit var addPostViewModel: AddPostViewModel
-
-    private var selectedImage : Int =0
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        binding = AddPostBinding.inflate(layoutInflater)
+    ): View {
+        binding = AddPostsFragmentBinding.inflate(layoutInflater)
 
-        initViewModels()
-        initObservers()
-        initListeners()
-        initImageSelectListener()
-
+        initViewListeners()
+        initSpinners()
 
         return binding.root
     }
 
-    private fun initViewModels(){
-        addPostViewModel = ViewModelProvider(
-            this,
-            MyViewModelFactory(
-            AddPostRepository()
+    private fun initSpinners(){
+        val isFurnished = resources.getStringArray(R.array.Is_Furnished)
+
+        val spinner = binding.isFurnishedSpinner
+        if (spinner != null) {
+            val adapter =  ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, isFurnished)
+            spinner.adapter = adapter
+
+            spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>?,
+                    view: View?,
+                    position: Int,
+                    id: Long
+                ) {
+                    val isfurnished = isFurnished[position]
+                    binding.edtIsFurnished.text = isfurnished
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>?) {
+                    Toast.makeText(context, "Please select one option", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
+
+    private fun initViewListeners(){
+
+        binding.btnNext.setOnClickListener {
+            val address =  binding.edtAddress.text.toString()
+            val state =  binding.edtState.text.toString()
+            val country = binding.edtCountry.text.toString()
+            val pincode =  binding.edtPincode.text.toString()
+            val latitude = binding.edtLatitude.text.toString()
+            val longitude = binding.edtLongitude.text.toString()
+            val deposit = binding.edtDeposite.text.toString()
+            val rent = binding.edtRent.text.toString()
+            val availableFrom = binding.edtAvailableFrom.text.toString()
+            val noOfCurrentRoommates = binding.edtNoOfCurrentRoommates.text.toString()
+            val noOfCurrentFemaleRoommates = binding.edtNoOfCurrentFemaleRoommates.text.toString()
+            val noOfCurrentMaleRoommates = binding.edtNoOfCurrentMaleRoommates.text.toString()
+            val isFurnished=  binding.edtIsFurnished.text.toString()
+
+            val addPostModel = AddPostModel(
+                address,
+                state,
+                country,
+                pincode,
+                latitude,
+                longitude,
+                deposit,
+                rent,
+                availableFrom,
+                noOfCurrentRoommates,
+                noOfCurrentFemaleRoommates,
+                noOfCurrentMaleRoommates,
+                isFurnished,
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
             )
-        )[AddPostViewModel::class.java]
-    }
-    private fun initObservers(){
-        addPostViewModel.addPostUpdateAvailableLiveData.observe(
-            viewLifecycleOwner
-        ){
-            removeCurrentFragment()
-        }
-    }
 
-    private fun removeCurrentFragment(){
-        parentFragmentManager.popBackStack()
-    }
+            val bundle = Bundle()
+            bundle.putSerializable("addPostModel",addPostModel)
 
-    private fun initListeners(){
-        binding.btnAddPost.setOnClickListener {
-            addPostViewModel.addPost(
-                selectedImage,
-                binding.edtName.text.toString(),
-                binding.edtAddress.text.toString(),
-                binding.edtRent.text.toString().toInt()
-            )
-        }
-    }
+            val roomLookingForFragment = RoomLookingForFragment()
+            roomLookingForFragment.arguments = bundle
 
-    private fun initImageSelectListener(){
-
-        binding.img1.setOnClickListener {
-            selectedImage = R.drawable.room1
-            binding.img1.alpha = 0.5f
-            binding.img2.alpha = 1.0f
-            binding.img3.alpha = 1.0f
-        }
-        binding.img2.setOnClickListener {
-            selectedImage = R.drawable.room2
-            binding.img2.alpha = 0.5f
-            binding.img1.alpha = 1.0f
-            binding.img3.alpha = 1.0f
-        }
-        binding.img3.setOnClickListener {
-            selectedImage = R.drawable.room3
-            binding.img3.alpha = 0.5f
-            binding.img2.alpha = 1.0f
-            binding.img1.alpha = 1.0f
+            parentFragmentManager.beginTransaction()
+                .add(R.id.mainContainer,roomLookingForFragment,null)
+                .addToBackStack(null)
+                .commit()
         }
     }
 }

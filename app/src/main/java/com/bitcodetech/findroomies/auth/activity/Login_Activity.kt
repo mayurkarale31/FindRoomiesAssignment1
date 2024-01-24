@@ -8,11 +8,12 @@ import com.bitcodetech.findroomies.MainActivity
 import com.bitcodetech.findroomies.commons.factory.MyViewModelFactory
 import com.bitcodetech.findroomies.auth.repository.LoginRepository
 import com.bitcodetech.findroomies.auth.viewmodels.LoginViewModel
-import com.bitcodetech.findroomies.databinding.LoginPageBinding
+import com.bitcodetech.findroomies.databinding.LoginActivityBinding
+import com.bitcodetech.findroomies.register.activity.RegisterActivity
 
 class Login_Activity : AppCompatActivity() {
 
-    private lateinit var binding : LoginPageBinding
+    private lateinit var binding : LoginActivityBinding
 
     private lateinit var loginViewModel: LoginViewModel
 
@@ -20,7 +21,7 @@ class Login_Activity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = LoginPageBinding.inflate(layoutInflater)
+        binding = LoginActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
 
@@ -51,7 +52,6 @@ class Login_Activity : AppCompatActivity() {
 
             }
         }
-
     }
 
     private fun startMainActivity(){
@@ -65,9 +65,13 @@ class Login_Activity : AppCompatActivity() {
     private fun initListeners(){
         binding.btnLogin.setOnClickListener {
             loginViewModel.validateCredentials(
-            binding.edtUsername.text.toString(),
+            binding.edtUserName.text.toString(),
             binding.edtPassword.text.toString()
             )
+        }
+        binding.txtRegister.setOnClickListener {
+            val intent = Intent(this,RegisterActivity::class.java)
+            startActivity(intent)
         }
     }
 }

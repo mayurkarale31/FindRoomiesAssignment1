@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="20dp">
+
+    <TextView
+        android:id="@+id/txtLookingFor"
+        android:text="Looking For"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:layout_margin="50dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/listing_min_age"
+        android:text="Min Age"
+        android:textSize="20sp"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        app:layout_constraintTop_toBottomOf="@+id/txtLookingFor"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:gravity="center"
+        android:layout_marginTop="5dp">
+    </TextView>
+
+    <EditText
+        android:id="@+id/edt_min_age"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_marginStart="10dp"
+        android:hint="Min Age"
+        android:textSize="20sp"
+        app:layout_constraintLeft_toRightOf="@+id/listing_min_age"
+        app:layout_constraintTop_toTopOf="@+id/listing_min_age">
+    </EditText>
+
+    <TextView
+        android:id="@+id/listing_max_age"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_marginLeft="12dp"
+        android:gravity="center"
+        android:text="Max Age"
+        android:textSize="20sp"
+        app:layout_constraintLeft_toRightOf="@+id/edt_min_age"
+        app:layout_constraintTop_toTopOf="@+id/edt_min_age">
+    </TextView>
+
+    <EditText
+        android:id="@+id/edt_max_age"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_marginStart="10dp"
+        android:hint="Max Age"
+        android:textSize="20sp"
+        app:layout_constraintLeft_toRightOf="@+id/listing_max_age"
+        app:layout_constraintTop_toTopOf="@+id/listing_max_age">
+    </EditText>
+
+    <TextView
+        android:id="@+id/listing_gender_preference"
+        android:text="Gender Preference"
+        android:textSize="20sp"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        app:layout_constraintTop_toBottomOf="@+id/listing_max_age"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:gravity="center"
+        android:layout_marginTop="5dp">
+    </TextView>
+
+    <EditText
+        android:id="@+id/edt_gender_preference"
+        android:layout_width="wrap_content"
+        android:layout_height="45dp"
+        android:layout_marginStart="10dp"
+        android:hint="Gender Preference"
+        android:textSize="20sp"
+        app:layout_constraintLeft_toRightOf="@+id/listing_gender_preference"
+        app:layout_constraintTop_toTopOf="@+id/listing_gender_preference">
+    </EditText>
+
+    <TextView
+        android:id="@+id/listing_occupation"
+        android:text="Occupation"
+        android:textSize="20sp"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        app:layout_constraintTop_toBottomOf="@+id/listing_gender_preference"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:gravity="center"
+        android:layout_marginTop="5dp">
+    </TextView>
+
+    <EditText
+        android:id="@+id/edt_occupation"
+        android:layout_width="wrap_content"
+        android:layout_height="45dp"
+        android:layout_marginStart="10dp"
+        android:hint="Enter your required occupation"
+        android:textSize="20sp"
+        app:layout_constraintLeft_toRightOf="@+id/listing_occupation"
+        app:layout_constraintTop_toTopOf="@+id/listing_occupation">
+    </EditText>
+
+    <TextView
+        android:id="@+id/listing_no_of_roommates_required"
+        android:text="no_of_roommates_required"
+        android:textSize="20sp"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        app:layout_constraintTop_toBottomOf="@+id/listing_occupation"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:gravity="center"
+        android:layout_marginTop="5dp">
+    </TextView>
+
+    <EditText
+        android:id="@+id/edt_no_of_roommates_required"
+        android:layout_width="wrap_content"
+        android:layout_height="45dp"
+        android:layout_marginStart="10dp"
+        android:hint="Enter No of Roommates Required"
+        android:textSize="20sp"
+        app:layout_constraintLeft_toRightOf="@+id/listing_no_of_roommates_required"
+        app:layout_constraintTop_toTopOf="@+id/listing_no_of_roommates_required">
+    </EditText>
+
+    <Button
+        android:id="@+id/btnNext"
+        android:text="Next"
+        android:textSize="20sp"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:backgroundTint="#47A9A3"
+        tools:layout_editor_absoluteX="118dp"
+        tools:layout_editor_absoluteY="612dp"
+        app:layout_constraintTop_toBottomOf="@+id/edt_no_of_roommates_required"
+        tools:ignore="MissingConstraints" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -12,10 +12,23 @@ class PostsAdapter(
     private val posts : ArrayList<Post>
 ): RecyclerView.Adapter<PostsAdapter.PostsViewHolder>() {
 
-    inner class PostsViewHolder(view : View) : RecyclerView.ViewHolder(view){
-        val postsViewBinding : PostsViewBinding
+    interface OnPostClickListener{
+        fun onPostListener(post: Post,position: Int,postsAdapter: PostsAdapter)
+    }
+    var onPostClickListener : OnPostClickListener? = null
+
+    inner class PostsViewHolder(view : View) : RecyclerView.ViewHolder(view) {
+        val postsViewBinding: PostsViewBinding
+
         init {
             postsViewBinding = PostsViewBinding.bind(view)
+            postsViewBinding.root.setOnClickListener {
+                onPostClickListener?.onPostListener(
+                    posts[adapterPosition],
+                    adapterPosition,
+                    this@PostsAdapter
+                )
+            }
         }
     }
 
