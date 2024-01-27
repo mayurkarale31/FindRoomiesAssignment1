@@ -1,5 +1,7 @@
 package com.bitcodetech.findroomies.addposts.fragments
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -31,6 +33,7 @@ class AddPostFragment : Fragment() {
 
         initViewListeners()
         initSpinners()
+        initListeners()
 
         return binding.root
     }
@@ -110,6 +113,29 @@ class AddPostFragment : Fragment() {
                 .add(R.id.mainContainer,roomLookingForFragment,null)
                 .addToBackStack(null)
                 .commit()
+        }
+    }
+
+    private fun initListeners(){
+        binding.imgOpenMap.setOnClickListener {
+            val intent = Intent(requireContext(), MapsActivity::class.java)
+            startActivityForResult(intent, MAP_REQUEST_CODE)
+        }
+    }
+
+    companion object {
+        const val MAP_REQUEST_CODE = 123
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == MAP_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+            val latitude = data?.getDoubleExtra("latitude", 0.0)
+            val longitude = data?.getDoubleExtra("longitude", 0.0)
+            // Update your TextViews with the latitude and longitude
+            // For example:
+            binding.edtLatitude.text = "$latitude"
+            binding.edtLongitude.text = "$longitude"
         }
     }
 }
